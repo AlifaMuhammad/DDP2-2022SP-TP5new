@@ -21,6 +21,10 @@ abstract class Product {
         return stock;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public abstract int checkDiscount(int quantity);
 
     public boolean isLocal() {

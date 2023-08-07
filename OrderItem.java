@@ -24,4 +24,12 @@ public class OrderItem {
         int discountedPrice = product.price * quantity * (100 - discountPercentage) / 100;
         return discountedPrice;
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

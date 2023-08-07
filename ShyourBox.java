@@ -16,11 +16,13 @@ public class ShyourBox {
         String productAddress = "input/daftarProduk.txt";
         String customerAddress = "input/daftarCustomer.txt";
 
-        shyourboxApp.addProduct(productAddress);
         shyourboxApp.addCustomer(customerAddress);
+        shyourboxApp.addProduct(productAddress);
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner masukan = new Scanner(System.in);
+        Scanner input2 = new Scanner(System.in);
         int choice;
+        String name = "";
         do {
             System.out.println("Menu" +
                     "\n1. Beli Produk" +
@@ -28,7 +30,7 @@ public class ShyourBox {
                     "\n3. Print Struk" +
                     "\n0. Keluar");
             System.out.print("Pilih menu: ");
-            choice = scanner.nextInt();
+            choice = masukan.nextInt();
 
             switch (choice) {
                 case 1:
@@ -36,7 +38,7 @@ public class ShyourBox {
                     break;
                 case 2:
                     System.out.print("Cari produk dengan nama: ");
-                    String name = scanner.nextLine();
+                    name = input2.nextLine();
                     shyourboxApp.searchProduct(name);
                     break;
                 case 3:
@@ -50,7 +52,7 @@ public class ShyourBox {
                     break;
             }
         } while (choice != 0);
-        scanner.close();
+        masukan.close();
     }
 
     /**
@@ -63,9 +65,7 @@ public class ShyourBox {
         Customer customer = findCustomer(customerName);
         if (customer == null) {
             System.out.println("Mohon maaf, customer atas nama " + customerName + " tidak terdaftar!");
-            input.close();
-            return;
-            
+            return;            
         }
         System.out.println("====MASUKKAN ITEM KE KERANJANG====");
         System.out.println();
@@ -75,6 +75,9 @@ public class ShyourBox {
         do {
             System.out.print("Masukkan nama produk: ");
             productName = input.nextLine();
+            if (productName == "") {
+                productName = input.nextLine();
+            }
             Product product = findProduct(productName);
             if (productName.equalsIgnoreCase("X")) {
                 break;
@@ -92,6 +95,7 @@ public class ShyourBox {
                 if (quantity <= product.getStock()) {
                     OrderItem orderItem = new OrderItem(product, quantity);
                     cart.addOrderItem(orderItem);
+                    product.setStock(product.getStock()-quantity);
                     System.out.println("Produk Berhasil ditambahkan!");
                     System.out.println();
                 } else {
@@ -99,7 +103,6 @@ public class ShyourBox {
                 }
             }
         } while (!productName.equalsIgnoreCase("X"));
-        input.close();
         carts.add(cart);
         System.out.println("Terima kasih sudah berbelanja, " + customerName + "!");
     }
@@ -115,8 +118,7 @@ public class ShyourBox {
         for (Product product : products) {
             if (product.getNama().equalsIgnoreCase(name)) {
                 System.out.println("Produk Ditemukan!");
-                System.out.println("[" + (product instanceof Fruit ? "Buah" : "Sayuran") + " "
-                        + (product.isLocal() ? "Lokal" : "Impor") + "]");
+                System.out.println("[" + (product instanceof Fruit ? "Buah" : "Sayuran") + " " + (product.isLocal() ? "Lokal" : "Impor") + "]");
                 System.out.println("Nama Produk: " + product.getNama());
                 System.out.println("Harga: " + product.getPrice());
                 System.out.println("Stok: " + product.getStock());
@@ -156,11 +158,9 @@ public class ShyourBox {
                         products.add(veggie);
                         successCount++;
                     } else {
-                        System.out.println("Gagal menambahkan 1 Produk: Tipe produk tidak valid.");
                         errorCount++;
                     }
                 } else {
-                    System.out.println("Gagal menambahkan 1 Produk: Format data produk tidak valid.");
                     errorCount++;
                 }
             }
@@ -191,9 +191,15 @@ public class ShyourBox {
                     boolean isPremium = data[1].equalsIgnoreCase("premium");
                     Customer customer = new Customer(name, isPremium);
                     customers.add(customer);
+                    if (data[1].equals("premium") || data[1].equals("reguler")) {
                     successCount++;
-                } else {
-                    System.out.println("Gagal menambahkan 1 Customer: Format data customer tidak valid.");
+                }
+                else {
+                    errorCount++;
+                }
+                    
+                } 
+                else {
                     errorCount++;
                 }
             }
@@ -219,8 +225,7 @@ public class ShyourBox {
                 writer.write("Daftar Belanja:\n");
                 for (OrderItem orderItem : cart.getOrderList()) {
                     Product product = orderItem.getProduct();
-                    writer.write(product.getNama() + "  " + orderItem.getQuantity() + "kg  "
-                            + orderItem.getFinalPrice() + "\n");
+                    writer.write(product.getNama() + "  " + orderItem.getQuantity() + "kg  " + orderItem.getFinalPrice() + "\n");
                 }
                 writer.write("Total Perbelanjaan: " + cart.getTotalPrice() + "\n");
                 writer.write("=============================\n");
