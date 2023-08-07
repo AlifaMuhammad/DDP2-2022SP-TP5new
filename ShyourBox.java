@@ -9,7 +9,7 @@ public class ShyourBox {
     private ArrayList<Cart> carts = new ArrayList<Cart>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ProductFormatException, CustomerFormatException {
         ShyourBox shyourboxApp = new ShyourBox();
         System.out.println("Welcome to ShyourBox! Yuk beli jangan shy shy!");
 
@@ -133,8 +133,9 @@ public class ShyourBox {
      * Method untuk menambahkan produk pada file txt ke dalam list produk.
      * 
      * @param fileAddress
+     * @throws ProductFormatException
      */
-    public void addProduct(String fileAddress) {
+    public void addProduct(String fileAddress) throws ProductFormatException {
         try {
             File file = new File(fileAddress);
             Scanner scanner = new Scanner(file);
@@ -143,6 +144,9 @@ public class ShyourBox {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] data = line.split(", ");
+                if (data.length != 5) {
+                    throw new ProductFormatException("Format data produk tidak valid.");
+                }
                 if (data.length == 5) {
                     String type = data[0];
                     String name = data[1];
@@ -176,8 +180,9 @@ public class ShyourBox {
      * Method untuk menambahkan customer pada file txt ke dalam list customer.
      * 
      * @param fileAddress
+     * @throws CustomerFormatException
      */
-    public void addCustomer(String fileAddress) {
+    public void addCustomer(String fileAddress) throws CustomerFormatException {
         try {
             File file = new File(fileAddress);
             Scanner scanner = new Scanner(file);
@@ -186,6 +191,9 @@ public class ShyourBox {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] data = line.split(", ");
+                if (data.length != 2) {
+                    throw new CustomerFormatException("Format data customer tidak valid.");
+                }
                 if (data.length == 2) {
                     String name = data[0];
                     boolean isPremium = data[1].equalsIgnoreCase("premium");

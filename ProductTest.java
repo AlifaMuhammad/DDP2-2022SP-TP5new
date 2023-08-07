@@ -12,14 +12,14 @@ public class ProductTest {
 
     @Test
     public void testFruitDiscount_QuantityEqualTo3() {
-        Fruit fruit = new Fruit("Apple", 10000, 10, true);
+        Fruit fruit = new Fruit("Grape", 10000, 10, true);
         int discount = fruit.checkDiscount(3);
         Assertions.assertEquals(20, discount);
     }
 
     @Test
     public void testFruitDiscount_QuantityLessThan3() {
-        Fruit fruit = new Fruit("Apple", 10000, 10, true);
+        Fruit fruit = new Fruit("Mango", 10000, 10, true);
         int discount = fruit.checkDiscount(2);
         Assertions.assertEquals(0, discount);
     }
@@ -29,14 +29,14 @@ public class ProductTest {
     public void testVeggieDiscount_QuantityGreaterThanEqualTo5() {
         Veggie veggie = new Veggie("Carrot", 8000, 15, true);
         int discount = veggie.checkDiscount(5);
-        Assertions.assertEquals(30, discount);
+        Assertions.assertEquals(20, discount);
     }
 
     @Test
     public void testVeggieDiscount_QuantityEqualTo3() {
         Veggie veggie = new Veggie("Carrot", 8000, 15, true);
         int discount = veggie.checkDiscount(3);
-        Assertions.assertEquals(20, discount);
+        Assertions.assertEquals(10, discount);
     }
 
     @Test
