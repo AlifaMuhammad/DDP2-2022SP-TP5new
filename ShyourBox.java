@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ public class ShyourBox {
         ShyourBox shyourboxApp = new ShyourBox();
         System.out.println("Welcome to ShyourBox! Yuk beli jangan shy shy!");
 
-        // Subject to change: file address.
         String productAddress = "input/daftarProduk.txt";
         String customerAddress = "input/daftarCustomer.txt";
 
@@ -65,7 +63,9 @@ public class ShyourBox {
         Customer customer = findCustomer(customerName);
         if (customer == null) {
             System.out.println("Mohon maaf, customer atas nama " + customerName + " tidak terdaftar!");
+            input.close();
             return;
+            
         }
         System.out.println("====MASUKKAN ITEM KE KERANJANG====");
         System.out.println();
@@ -75,11 +75,11 @@ public class ShyourBox {
         do {
             System.out.print("Masukkan nama produk: ");
             productName = input.nextLine();
+            Product product = findProduct(productName);
             if (productName.equalsIgnoreCase("X")) {
                 break;
             }
     
-            Product product = findProduct(productName);
             if (product == null) {
                 System.out.println("Mohon maaf, produk tidak tersedia!");
             } else {
@@ -99,7 +99,7 @@ public class ShyourBox {
                 }
             }
         } while (!productName.equalsIgnoreCase("X"));
-    
+        input.close();
         carts.add(cart);
         System.out.println("Terima kasih sudah berbelanja, " + customerName + "!");
     }
@@ -112,7 +112,6 @@ public class ShyourBox {
      * @return
      */
     public Product searchProduct(String name) {
-        // TODO: Implement this method.
         for (Product product : products) {
             if (product.getNama().equalsIgnoreCase(name)) {
                 System.out.println("Produk Ditemukan!");
@@ -134,7 +133,6 @@ public class ShyourBox {
      * @param fileAddress
      */
     public void addProduct(String fileAddress) {
-        // TODO: Implement this method.
         try {
             File file = new File(fileAddress);
             Scanner scanner = new Scanner(file);
@@ -180,7 +178,6 @@ public class ShyourBox {
      * @param fileAddress
      */
     public void addCustomer(String fileAddress) {
-        // TODO: Implement this method.
         try {
             File file = new File(fileAddress);
             Scanner scanner = new Scanner(file);
@@ -212,7 +209,6 @@ public class ShyourBox {
      * Method untuk mencetak struk belanja pada file txt.
      */
     public void printReceipt() {
-        // TODO: Implement this method.
         try {
             FileWriter writer = new FileWriter("Struk.txt");
             writer.write("Berikut adalah rekap perbelanjaan hari ini:\n");
@@ -236,7 +232,11 @@ public class ShyourBox {
         }
         }
 
-
+    /**
+     * method untuk mencari produk
+     * @param name
+     * @return
+     */
     public Product findProduct(String name) {
         for (Product product : products) {
             if (product.getNama().equalsIgnoreCase(name)) {
@@ -246,6 +246,11 @@ public class ShyourBox {
         return null;
     }
 
+    /**
+     * method untuk mencari nama customer
+     * @param name
+     * @return
+     */
     public Customer findCustomer(String name) {
         for (Customer customer : customers) {
             if (customer.getName().equalsIgnoreCase(name)) {

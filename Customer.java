@@ -1,5 +1,4 @@
 public class Customer {
-    // TODO: Implement this class.
     String name;
     boolean isPremium;
 

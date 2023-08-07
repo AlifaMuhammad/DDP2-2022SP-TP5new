@@ -7,6 +7,9 @@ public class Fruit extends Product{
     }
 
     @Override
+    /**
+     * method untuk menghitung diskon yang diperoleh
+     */
     public int checkDiscount(int quantity) {
         if (isLocal) {
             if (quantity >= 5) {

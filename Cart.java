@@ -17,8 +17,11 @@ public class Cart {
         return orderList;
     }
 
+    /**
+     * method untuk menghitung total harga
+     * @return
+     */
     public int getTotalPrice() {
-        // TODO: Implement this method.
         int totalPrice = 0;
         for (OrderItem orderItem : orderList) {
             totalPrice += orderItem.getFinalPrice();
@@ -29,6 +32,10 @@ public class Cart {
         return totalPrice;
     }
 
+    /**
+     * method untuk menambah orderan
+     * @param orderItem
+     */
     public void addOrderItem(OrderItem orderItem) {
         orderList.add(orderItem);
     }

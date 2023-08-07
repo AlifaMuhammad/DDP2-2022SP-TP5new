@@ -5,7 +5,6 @@ public class OrderItem {
     OrderItem(Product product, int quantity) {
         this.product = product;
         this.quantity = quantity;
-        // TODO: Implement this method.
     };
 
     public Product getProduct(){
@@ -16,8 +15,11 @@ public class OrderItem {
         return quantity;
     }
 
+    /**
+     * method untuk menghitung harga final
+     * @return
+     */
     public int getFinalPrice() {
-        // TODO: Implement this method.
         int discountPercentage = product.checkDiscount(quantity);
         int discountedPrice = product.price * quantity * (100 - discountPercentage) / 100;
         return discountedPrice;

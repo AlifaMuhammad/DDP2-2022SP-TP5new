@@ -1,5 +1,4 @@
 public class Veggie extends Product{
-    // TODO: Implement this class.
     private boolean isOrganic;
 
     Veggie(String name, int price, int stock, boolean isOrganic) {
