@@ -144,9 +144,6 @@ public class ShyourBox {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] data = line.split(", ");
-                if (data.length != 5) {
-                    throw new ProductFormatException("Format data produk tidak valid.");
-                }
                 if (data.length == 5) {
                     String type = data[0];
                     String name = data[1];
